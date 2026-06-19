@@ -307,3 +307,5 @@ python main.py                        # then run the bot
 # ──────────────── When you are done ─────────────────
 deactivate                            # exit the venv
 ```
+
+### Task Done! Waiting to recieve Shawarma from you end :)
