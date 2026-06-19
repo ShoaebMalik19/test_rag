@@ -49,7 +49,6 @@ def build_vectorstore(chunks):
         embedding=embeddings,
         persist_directory=str(VECTORSTORE_DIR),
     )
-    vectordb.persist()
     print("[INGEST] Vector store built and persisted.")
     return vectordb
 
