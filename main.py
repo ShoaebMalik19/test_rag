@@ -1,6 +1,8 @@
 import traceback
+from pathlib import Path
 
 from rag.chat import ask_rag
+from rag.config import VECTORSTORE_DIR
 
 
 def log_api_error(context: str, exc: Exception):
@@ -18,13 +20,22 @@ def log_api_error(context: str, exc: Exception):
     traceback.print_exc()
 
 
+def ensure_vectorstore():
+    index_path = Path(VECTORSTORE_DIR) / "chroma.sqlite3"
+    if not index_path.exists():
+        print("[INFO] No vector store found. Running ingestion now...\n")
+        from rag.ingest import run_ingestion
+        run_ingestion()
+        print()
+
+
 def chat_loop():
     print("Type your trade idea or question. Type 'exit' to quit.\n")
 
     while True:
         question = input("You: ").strip()
         if question.lower() in {"exit", "quit"}:
-            print("Bot: Goodbye 👋")
+            print("Bot: Goodbye")
             break
 
         if not question:
@@ -38,11 +49,8 @@ def chat_loop():
 
 
 def main():
-    print("=== Trading RAG SMC Assistant ===")
-    print(
-        "[INFO] Using existing vector store. "
-        "Run `python -m rag.ingest` separately whenever you need to refresh it.\n"
-    )
+    print("=== Trading RAG SMC Assistant ===\n")
+    ensure_vectorstore()
     chat_loop()
 
 
