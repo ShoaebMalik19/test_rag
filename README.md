@@ -161,11 +161,14 @@ to be done once.
 
 ### Step 5 — Add your API key
 
-Open the `.env` file in the project root and replace the placeholder with your
+Create a `.env` file in the project root and replace the placeholder with your
 real Google AI Studio API key:
 
 ```
 GOOGLE_API_KEY=your_actual_key_here
+EMBEDDING_MODEL=models/gemini-embedding-001
+CHAT_MODEL=gemini-2.5-flash
+VECTORSTORE_DIR=./vectorstore
 ```
 
 Save the file. Do not share this file or commit it to git — it is already listed
@@ -282,20 +285,25 @@ is your API key.
 ## Quick command reference
 
 ```powershell
-# ── First-time setup ──────────────────────────────────────────
+# ─────────────── First-time setup ─────────────
+
 python -m venv venv                   # create the virtual environment
-.\venv\Scripts\Activate.ps1           # activate it  (Mac/Linux: source venv/bin/activate)
+
+.\venv\Scripts\Activate.ps1           # activate it  
+source venv/bin/activate              # for (Mac/Linux)
 pip install -r requirements.txt       # install all packages into the venv
 
-# ── Every time you use the bot ────────────────────────────────
+# ─────────── Every time you use the bot ────────────
+
 .\venv\Scripts\Activate.ps1           # activate the venv first
 python main.py                        # run the bot
 
-# ── After adding new documents ────────────────────────────────
-.\venv\Scripts\Activate.ps1
+# ─────────── After adding new documents ─────────────
+
+.\venv\Scripts\Activate.ps1           # activate 
 python -m rag.ingest                  # rebuild the vector store
 python main.py                        # then run the bot
 
-# ── When you are done ─────────────────────────────────────────
+# ──────────────── When you are done ─────────────────
 deactivate                            # exit the venv
 ```
